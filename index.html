@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Kegalu Vidyalaya Photography Art Society</title>
+  <title>Kegalu Vidyalaya Photographic Art Society</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta property="og:site_name" content="KVPAS">
@@ -11,14 +11,18 @@
   <meta property="og:image:width" content="830">
   <meta property="og:image:height" content="553">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.kvpas-official.com/">
+  <meta property="og:url" content="https://kvpas-official.com/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Kegalu Vidyalaya Photographic Art Society">
   <meta name="twitter:description" content="The official site of Kegalu Vidyalaya's Photographic Art Society (KVPAS). Explore our gallery, meet the team, and check out our annual PRABA photography competition.">
   <meta name="twitter:image" content="https://raw.githubusercontent.com/aknar24/KVPAS/main/kvpas.png">
-</head>
-
-  <link rel="icon" type="image/png" href="favicon.png">
+  
+  <link rel="canonical" href="https://kvpas-official.com/">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+  <link rel="icon" href="favicon/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon/favicon.ico">
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@400;700;900&family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
@@ -216,7 +220,7 @@
     .section-title span { color: var(--gold); }
     .section-body {    color: var(--text-muted); line-height: 1.8; max-width: 600px; }
     
-    #contact{}
+    #contact {}
     .contact-body { color: var(--text-muted); line-height: 1.8; text-align: center; font-size: larger; }
     .contact-logo {text-align: center;}
 
@@ -432,18 +436,40 @@
     }
 
     .preloader {
-      min-height: 100vh;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg-main);
       display: flex; align-items: center; justify-content: center;
-      position: relative;
-      /* padding: 8rem 2rem 4rem; */
       transition: opacity .6s ease, visibility .6s ease;
     }
-    .preloader video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 9999;
+    .pulse-wrap {
+      position: relative;
+      width: 400px; height: 400px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preloader-logo {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      position: relative; z-index: 2;
+    }
+    .pulse-ring {
+      position: absolute;
+      width: 1000px; height: 1000px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgb(12, 56, 255) 0%, rgba(0, 26, 255, 0) 70%);
+      transform: scale(0);
+      opacity: 0;
+      animation: pulse-out 2.4s ease-out infinite;
+    }
+    .ring-delay-1 { animation-delay: .35s; }
+    .ring-delay-2 { animation-delay: 1.3s; }
+  
+  
+    @keyframes pulse-out {
+      0%   { transform: scale(0);   opacity: 0; }
+      25%  { opacity: 1; }
+      100% { transform: scale(1);   opacity: 0; }
     }
     .preloader.hide {
       opacity: 0;
@@ -456,17 +482,20 @@
 <body>
 
   <div class="preloader" id="preloader">
-    <video autoplay muted playsinline id="intro-video">
-      <source src="intro.mp4" type="video/mp4">
-    </video>
+    <div class="pulse-wrap">
+      <span class="pulse-ring"></span>
+      <span class="pulse-ring ring-delay-1"></span>
+      <span class="pulse-ring ring-delay-2"></span>
+      <img src="https://kvpas-official.com/JK.webp" alt="KVPAS" class="preloader-logo">
+    </div>
   </div>
 
   <nav>
-<a href="https://www.kvpas-official.com/" class="navbar-brand">
-<img src="BR.png" alt="KVPAS" style="max-width: 280px;  height: auto;">
+<a href="https://kvpas-official.com/" class="navbar-brand">
+<img src="https://kvpas-official.com/BR.png" alt="KVPAS" style="max-width: 280px;  height: auto;">
 </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">HOME</a></li>
+      <li><a href="https://kvpas-official.com/" class="active">HOME</a></li>
       <li><a href="gallery.html">Events</a></li>
       <li><a href="team.html">Team</a></li>
       <li><a href="competition.html">Competition</a></li>
@@ -479,7 +508,7 @@
   <div class="mobile-nav">
     <button class="mobile-nav-close" aria-label="Close menu" onclick="document.querySelector('.mobile-nav').classList.remove('open')">&times;</button>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="https://kvpas-official.com/" class="active">Home</a></li>
       <li><a href="gallery.html">Events</a></li>
       <li><a href="team.html">Team</a></li>
       <li><a href="competition.html">Competition</a></li>
@@ -488,8 +517,8 @@
   </div>
 
   <section id="hero">
-    <video class="hero-video" autoplay muted loop playsinline poster="BG.png">
-      <source src="BG-cover.mp4" type="video/mp4">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://kvpas-official.com/cover/BG.png">
+      <source src="https://kvpas-official.com/BG-cover.mp4" type="video/mp4">
     </video>
     <div class="aperture-ring">
       <!-- Blades -->
@@ -511,9 +540,10 @@
       <p class="hero-sub">
         Kegalu Vidyalaya Photographic Art Society rooted in 1959, we blend tradition with fresh vision, using light and frame to reflect who we were, who we are, and who we will become.
       </p>
-      <a class="hero-cta" onclick="scrollDown()">
+      <!--<a class="hero-cta" onclick="scrollDown()">-->
+      <a class="hero-cta" href="https://kvpas-official.com/competition.html">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934C20.717 11.416 21 11.698 21 12c0 .302-.283.584-.812 1.066C19.056 14.08 16.309 16 12 16s-7.056-1.92-8.188-2.934C3.283 12.584 3 12.302 3 12c0-.302.283-.584.812-1.066C4.944 9.92 7.691 8 12 8s7.056 1.92 8.188 2.934z"/></svg>
-        Explore
+        PRABHA '26
       </a>
     </div>
   </section>
@@ -531,13 +561,13 @@
           We also host workshops, photo walks, editing sessions, and competitions throughout the year giving every member a chance to develop their eye, technical skill, and unique voice.
         </p>
       </div>
-       <div class="about-visual">
+       <!--<div class="about-visual">
         <div class="about-placeholder">
-          <img src="BG.png" style="max-width: 100%;">
+          <img src="https://kvpas-official.com/BG.png" style="max-width: 100%;">
         </div>
          <div class="about-corner"></div>
          <div class="about-corner-2"></div>
-      </div>
+      </div>--->
     </div>
   </section>
 
@@ -552,13 +582,13 @@
     <div class="gallery-grid reveal">
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx1.jpg">
+        <img src="https://kvpas-official.com/image/cx1.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">84th Anniversary</span></div></a>
       </div>
 
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx2.jpg">
+        <img src="https://kvpas-official.com/image/cx2.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">BATTLE OF GOLDS</span></div></a>
       </div>
 
@@ -568,33 +598,33 @@
 
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx4.jpg">
+        <img src="https://kvpas-official.com/image/cx4.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">RUGBY MATCH</span></div></a>
       </div>
 
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx5.jpg">
+        <img src="https://kvpas-official.com/image/cx5.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">FUNKEY EVE'26</span></div></a>
       </div>
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx6.jpg">
+        <img src="https://kvpas-official.com/image/cx6.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">Poson Procession</span></div></a>
       </div>
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx7.jpg">
+        <img src="https://kvpas-official.com/image/cx7.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">Vehicle Parade</span></div></a>
       </div>
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx8.jpg">
+        <img src="https://kvpas-official.com/image/cx8.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">S&T New Year</span></div></a>
       </div>
       <div class="gallery-item">
         <a href="gallery.html">
-        <img src="image/cx3.jpg">
+        <img src="https://kvpas-official.com/image/cx3.jpg">
         <div class="gallery-overlay"><span class="gallery-overlay-text">CONCORDIA'26</span></div></a>
       </div>
     </div>
@@ -622,7 +652,7 @@
 
   <section id="contact">
     <div class="reveal visible">
-      <h2 class="contact-logo"><img src="BR.png" style="width: 535px; max-width: 100%;"></h2>
+      <h2 class="contact-logo"><img src="https://kvpas-official.com/BR.png" style="width: 535px; max-width: 100%;"></h2>
       <p class="contact-body" style="margin-top: -0.5rem;">SINCE 1959</p>
       <p class="footer-para" style="margin-top: 1rem;">
         Kegalu Vidyalaya Photographic Art Society rooted in 1959, we blend tradition with fresh vision, using light and<br>
@@ -736,11 +766,8 @@
       });
     });
 
-    // Intro preloader — plays once per browser tab session,
-    // not on every single reload/page click.
     (function () {
       const preloader = document.getElementById('preloader');
-      const introVideo = document.getElementById('intro-video');
 
       if (sessionStorage.getItem('kvpasIntroPlayed')) {
         preloader.remove();
@@ -753,9 +780,7 @@
         setTimeout(() => preloader.remove(), 700);
       }
 
-      introVideo.addEventListener('ended', dismiss);
-      // Safety net: dismiss anyway if the video fails to load or play
-      setTimeout(dismiss, 4500);
+    setTimeout(dismiss, 4000);
     })();
   </script>
 </body>
