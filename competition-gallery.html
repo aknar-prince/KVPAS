@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>KVPAS | Competition Gallery</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="The PRABA '26 competition gallery will open once judging is complete. Check back after the competition concludes.">
+  
+  <link rel="canonical" href="https://kvpas-official.com/competition-gallery.html">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+  <link rel="icon" href="favicon/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="favicon/favicon.ico">
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@400;700;900&family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:    #0f1923;
+      --bg-main:    #1a2a3a;
+      --bg-card:    #1e3148;
+      --gold:       #F5C842;
+      --gold-dim:   #c9a030;
+      --text:       #E8EDF2;
+      --text-muted: #8fa3b8;
+      --footer-text: #a0a9b1;
+      --border:     rgba(245,200,66,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-deep);
+      color: var(--footer-text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    #coming-soon {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 6vw;
+      background: radial-gradient(ellipse at center, var(--bg-main) 0%, var(--bg-deep) 70%);
+    }
+    .cs-icon {
+      width: 84px; height: 84px;
+      margin: 0 auto 2rem;
+      border: 2px solid var(--gold-dim);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: pulse-ring 2.4s ease-in-out infinite;
+    }
+    .cs-icon svg { width: 36px; height: 36px; color: var(--gold); }
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245,200,66,0.25); }
+      50%      { box-shadow: 0 0 0 14px rgba(245,200,66,0); }
+    }
+
+    .cs-eyebrow {
+      font-family: 'Big Shoulders Stencil Display', cursive;
+      font-size: 2rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .cs-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+    .cs-title span { color: var(--gold); }
+    .cs-body {
+      max-width: 520px; margin: 0 auto 2.5rem;
+      color: var(--text-muted); line-height: 1.8; font-size: 1rem;
+    }
+    .cs-back {
+      display: inline-block;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: .85rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600; letter-spacing: .30em;
+      transition: background .25s ease, color .25s ease;
+    }
+    .cs-back:hover { background: var(--gold); color: var(--bg-deep); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+
+<body>
+  <section id="coming-soon">
+    <div class="reveal visible">
+      <div class="cs-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="cs-eyebrow">Coming Soon</div>
+      <h1 class="cs-title">The Gallery Opens <span>After Judging</span></h1>
+      <p class="cs-body">
+        PRABHA'26 is still underway — winning entries and highlights from this year's competition
+        will be added here once the results are announced. Check back soon!
+      </p>
+      <a href="competition.html" class="cs-back">←  BACK</a>
+    </div>
+  </section>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
