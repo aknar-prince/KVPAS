@@ -325,9 +325,7 @@
       .nav-links { display: none; }
       .menu-toggle { display: flex; }
     }
-    /* ── SHUTTER-CLOSED OVERLAY ──
-       Opens from the Register button once the deadline has passed.
-       (Add ?preview=closed to the page URL to preview it before then.) */
+    /**/
     .shutter-overlay {
       position: fixed; inset: 0; z-index: 10000;
       display: flex; align-items: center; justify-content: center;
@@ -538,11 +536,7 @@
     </div>
   </footer>
 
-  <!-- ════════════════════════════════
-       SHUTTER-CLOSED OVERLAY
-       Shown (instead of the Google Form) when someone clicks
-       Register after the deadline in #countdown-timer has passed.
-       ════════════════════════════════ -->
+  <!-- ════════════════════════════════ -->
   <div class="shutter-overlay" id="shutter-overlay" role="dialog" aria-modal="true" aria-labelledby="shutter-title" aria-hidden="true">
     <div class="shutter-flash" id="shutter-flash"></div>
 
@@ -576,10 +570,10 @@
         <div class="shutter-status"><span class="rec-dot"></span> Registration Closed</div>
         <p class="shutter-body">
           Entries for PRABHA '26 are no longer being accepted. Thank you to every photographer
-          who took part. Follow our pages for the results and for next year's call for entries.
+          who took part. Follow our pages for updates on the results and announcement.
         </p>
         <div class="shutter-actions">
-          <button type="button" class="shutter-btn shutter-btn-solid" id="shutter-back">&larr; Back to Competition</button>
+          <button type="button" class="shutter-btn shutter-btn-solid" id="shutter-back">Back to Competition</button>
           <a href="https://kvpas-official.com/competition-gallery.html" class="shutter-btn shutter-btn-outline">Competition Gallery</a>
         </div>
       </div>
