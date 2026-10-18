@@ -321,11 +321,11 @@
       .countdown-box { width: 100px; }
       .countdown-num { font-size: 2.2rem; }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 815px) {
       .nav-links { display: none; }
       .menu-toggle { display: flex; }
     }
-    /**/
+
     .shutter-overlay {
       position: fixed; inset: 0; z-index: 10000;
       display: flex; align-items: center; justify-content: center;
@@ -338,24 +338,28 @@
     .shutter-overlay.open { opacity: 1; visibility: visible; }
     .shutter-inner { text-align: center; max-width: 560px; margin: auto; position: relative; z-index: 2; }
 
-    .shutter-iris { position: relative; width: min(64vw, 300px); aspect-ratio: 1; margin: 0 auto 1rem; cursor: pointer; }
-    .shutter-iris svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .shutter-iris {
+      position: fixed; inset: 0; z-index: 4; cursor: pointer;
+      transition: opacity .45s ease .1s, visibility .45s ease .1s;
+    }
+    .shutter-overlay.is-closed .shutter-iris { opacity: 0; visibility: hidden; pointer-events: none; }
+    .shutter-iris svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .shutter-glow {
-      position: absolute; inset: -28%; border-radius: 50%; pointer-events: none;
-      background: radial-gradient(circle, rgba(245,200,66,.38) 0%, rgba(245,200,66,0) 62%);
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at center, rgba(245,200,66,.28) 0%, rgba(245,200,66,0) 55%);
     }
     .shutter-edge { stroke: #c9a030; stroke-opacity: .7; stroke-width: 1; stroke-linecap: round; }
 
-    .shutter-flash { position: absolute; inset: 0; background: rgba(245,200,66,.22); opacity: 0; pointer-events: none; z-index: 3; }
+    .shutter-flash { position: fixed; inset: 0; background: rgba(245,200,66,.30); opacity: 0; pointer-events: none; z-index: 5; }
     .shutter-flash.go { animation: shutter-flash .6s ease-out; }
     @keyframes shutter-flash { 0% { opacity: 0; } 18% { opacity: 1; } 100% { opacity: 0; } }
 
-    .shutter-copy > * { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .shutter-copy > * { opacity: 0; transform: translateY(14px); transition: opacity .9s ease, transform .9s ease; }
     .shutter-overlay.is-closed .shutter-copy > * { opacity: 1; transform: translateY(0); }
-    .shutter-overlay.is-closed .shutter-copy > *:nth-child(2) { transition-delay: .12s; }
-    .shutter-overlay.is-closed .shutter-copy > *:nth-child(3) { transition-delay: .24s; }
-    .shutter-overlay.is-closed .shutter-copy > *:nth-child(4) { transition-delay: .36s; }
-    .shutter-overlay.is-closed .shutter-copy > *:nth-child(5) { transition-delay: .48s; }
+    .shutter-overlay.is-closed .shutter-copy > *:nth-child(1) { transition-delay: .45s; }
+    .shutter-overlay.is-closed .shutter-copy > *:nth-child(2) { transition-delay: .8s; }
+    .shutter-overlay.is-closed .shutter-copy > *:nth-child(3) { transition-delay: 1.15s; }
+    .shutter-overlay.is-closed .shutter-copy > *:nth-child(4) { transition-delay: 1.5s; }
 
     .shutter-status {
       display: inline-flex; align-items: center; gap: .65rem;
@@ -385,6 +389,9 @@
       .shutter-flash.go { animation: none; }
       .shutter-copy > * { transition: none; }
     }
+
+    @media (max-width: 480px) { .shutter-status { font-size: 1.4rem; } }
+    
   </style>
 </head>
 
@@ -536,19 +543,19 @@
     </div>
   </footer>
 
-  <!-- ════════════════════════════════ -->
+
   <div class="shutter-overlay" id="shutter-overlay" role="dialog" aria-modal="true" aria-labelledby="shutter-title" aria-hidden="true">
     <div class="shutter-flash" id="shutter-flash"></div>
 
     <div class="shutter-inner">
-      <div class="shutter-iris" id="shutter-iris" title="Click to replay">
+      <div class="shutter-iris" id="shutter-iris">
         <div class="shutter-glow" id="shutter-glow"></div>
-        <svg viewBox="-110 -110 220 220" aria-hidden="true">
+        <svg viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <defs>
             <radialGradient id="shutter-light-grad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#fff6d6"/>
-              <stop offset="55%" stop-color="#F5C842"/>
-              <stop offset="100%" stop-color="#c98a1e"/>
+              <stop offset="0%" stop-color="#fff1c2" stop-opacity=".9"/>
+              <stop offset="40%" stop-color="#F5C842" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#8a5a12" stop-opacity=".35"/>
             </radialGradient>
           </defs>
           <g id="shutter-iris-group">
@@ -561,8 +568,6 @@
             <line class="shutter-edge" x1="0" y1="0" x2="0" y2="0"/>
             <line class="shutter-edge" x1="0" y1="0" x2="0" y2="0"/>
           </g>
-          <circle r="92" fill="none" stroke="#c9a030" stroke-opacity=".55" stroke-width="1.2"/>
-          <circle r="100" fill="none" stroke="#c9a030" stroke-opacity=".25" stroke-width="1"/>
         </svg>
       </div>
 
@@ -570,10 +575,10 @@
         <div class="shutter-status"><span class="rec-dot"></span> Registration Closed</div>
         <p class="shutter-body">
           Entries for PRABHA '26 are no longer being accepted. Thank you to every photographer
-          who took part. Follow our pages for updates on the results and announcement.
+          who took part. Follow our pages for the results and announcements.
         </p>
         <div class="shutter-actions">
-          <button type="button" class="shutter-btn shutter-btn-solid" id="shutter-back">Back to Competition</button>
+          <button type="button" class="shutter-btn shutter-btn-solid" id="shutter-back">&larr; Back to Competition</button>
           <a href="https://kvpas-official.com/competition-gallery.html" class="shutter-btn shutter-btn-outline">Competition Gallery</a>
         </div>
       </div>
@@ -581,7 +586,7 @@
   </div>
 
   <script>
-    // Scroll reveal
+
     const reveals = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
@@ -593,8 +598,6 @@
     }, { threshold: 0.12 });
     reveals.forEach(el => io.observe(el));
 
-    // Live countdown — set the real deadline via the data-deadline
-    // attribute on #countdown-timer above.
     const timerEl = document.getElementById('countdown-timer');
     const deadline = new Date(timerEl.dataset.deadline).getTime();
     function tickCountdown() {
@@ -609,8 +612,7 @@
     }
     tickCountdown();
     setInterval(tickCountdown, 60000);
-    // Shutter-closed overlay — Register opens the form until the deadline,
-    // then opens this overlay instead. Preview early with ?preview=closed
+
     (function () {
       const overlay  = document.getElementById('shutter-overlay');
       const regBtn   = document.querySelector('.register-btn');
@@ -626,10 +628,15 @@
       const forceClosed = /[?&]preview=closed/.test(location.search);
       const isClosed = () => forceClosed || Date.now() >= deadline;
 
-      const R = 90, D0 = 62, K = 0.57735, C30 = 1.1547;
-      let raf = null, lastFocus = null;
+      const R = 145, K = 0.57735, C30 = 1.1547;
+      let D0 = 60, raf = null, lastFocus = null;
 
-      // e: 0 = fully open, 1 = fully closed
+      function fitAperture() {
+        const s = Math.max(innerWidth, innerHeight) / 200;
+        const halfW = innerWidth / 2 / s, halfH = innerHeight / 2 / s;
+        D0 = 0.96 * Math.min(halfH, halfW / C30);
+      }
+
       function draw(e) {
         const d = D0 * (1 - e);
         let hex = '';
@@ -663,6 +670,7 @@
       function play() {
         cancelAnimationFrame(raf);
         overlay.classList.remove('is-closed');
+        fitAperture();
         draw(0);
         if (reduce) { draw(1); finish(); return; }
         const HOLD = 600, DUR = 1500, t0 = performance.now();
@@ -691,11 +699,13 @@
         if (lastFocus) lastFocus.focus();
       }
 
-      regBtn.addEventListener('click', (ev) => {
-        if (isClosed()) { ev.preventDefault(); openOverlay(); }
-      });
+      document.querySelectorAll('.register-btn, .pdf-card').forEach((el) => {
+        el.addEventListener('click', (ev) => {
+          if (isClosed()) { ev.preventDefault(); openOverlay(); }
+        });
+     });
       backBtn.addEventListener('click', closeOverlay);
-      iris.addEventListener('click', play);
+      iris.addEventListener('click', () => { cancelAnimationFrame(raf); draw(1); finish(); });
       document.addEventListener('keydown', (ev) => {
         if (!overlay.classList.contains('open')) return;
         if (ev.key === 'Escape') closeOverlay();
