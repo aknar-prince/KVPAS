@@ -108,20 +108,35 @@
     }
 
     #cover {
-      min-height: 30vh;
-      display: flex; align-items: center;
-      padding: 130px 6vw 3rem;
-      background: linear-gradient(160deg, #1a2a3a 0%, #0f1923 100%);
+      min-height: 41vh;
+      position: relative;
+      background-image: url(https://kvpas-official.com/cover/BG-com-gallery.png);
+      background-size: cover;
+      background-position: center;
+      padding: 197px 6vw 5rem;
+      overflow: hidden;
     }
+    #cover::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15,25,35,0.95) 0%,
+        rgba(15,25,35,0.45) 55%,
+        rgba(15,25,35,0.15) 100%
+      );
+      pointer-events: none;
+    }
+    .cover-content { position: relative; z-index: 2; }
     .cover-eyebrow {
       font-family: 'Big Shoulders Stencil Display', cursive;
       display: flex; justify-content: center; align-items: center; gap: .6rem;
-      font-size: 3rem; font-weight: 600; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--text);
-      width: 100%;
+      font-size: 3.5rem; font-weight: 600; letter-spacing: .18em;
+      text-align: center; text-transform: uppercase; color: var(--text);
+      margin-bottom: 1rem;
     }
     .cover-eyebrow::before, .cover-eyebrow::after {
-      content: ''; display: block; width: 70px; height: 7px; background: var(--gold);
+      content: ''; display: block; width: 70px; height: 7px; background: var(--gold); margin-right: 5px;
     }
 
     #filters {
@@ -355,7 +370,7 @@
   </div>
 
   <section id="cover">
-    <div class="cover-eyebrow reveal visible"><b>PRABA '26 Results</b></div>
+    <div class="cover-eyebrow reveal visible"><b>PRABHA'26 Results</b></div>
   </section>
 
   <section id="filters">
