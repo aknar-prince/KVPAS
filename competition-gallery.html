@@ -234,6 +234,7 @@
     }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
     .section-title {
+      display:table;
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.8rem, 3.4vw, 2.4rem);
       color: var(--text); margin-bottom: 2.5rem;
@@ -367,8 +368,7 @@
   </section>
 
   <section id="judges">
-    <div class="section-label reveal">Panel</div>
-    <h2 class="section-title reveal">Meet This Year's <span>Judges</span></h2>
+    <h2 class="section-title reveal">Meet This Year <span>Judge Panel</span></h2>
     <div class="judge-grid">
       <div class="judge-card reveal">
         <div class="judge-photo">
