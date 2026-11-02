@@ -108,35 +108,20 @@
     }
 
     #cover {
-      min-height: 41vh;
-      position: relative;
-      background-image: url(https://kvpas-official.com/cover/BG-com-gallery.png);
-      background-size: cover;
-      background-position: center;
-      padding: 197px 6vw 5rem;
-      overflow: hidden;
+      min-height: 30vh;
+      display: flex; align-items: center;
+      padding: 130px 6vw 3rem;
+      background: linear-gradient(160deg, #1a2a3a 0%, #0f1923 100%);
     }
-    #cover::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(15,25,35,0.95) 0%,
-        rgba(15,25,35,0.45) 55%,
-        rgba(15,25,35,0.15) 100%
-      );
-      pointer-events: none;
-    }
-    .cover-content { position: relative; z-index: 2; }
     .cover-eyebrow {
       font-family: 'Big Shoulders Stencil Display', cursive;
       display: flex; justify-content: center; align-items: center; gap: .6rem;
-      font-size: 3.5rem; font-weight: 600; letter-spacing: .18em;
-      text-align: center; text-transform: uppercase; color: var(--text);
-      margin-bottom: 1rem;
+      font-size: 3rem; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text);
+      width: 100%;
     }
     .cover-eyebrow::before, .cover-eyebrow::after {
-      content: ''; display: block; width: 70px; height: 7px; background: var(--gold); margin-right: 5px;
+      content: ''; display: block; width: 70px; height: 7px; background: var(--gold);
     }
 
     #filters {
@@ -249,9 +234,7 @@
     }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 60px; }
     .section-title {
-      display:table;
-      font-family: 'Big Shoulders Stencil Display', cursive; letter-spacing: 0.1rem;
-      text-transform: uppercase;
+      font-family: 'Playfair Display', serif;
       font-size: clamp(1.8rem, 3.4vw, 2.4rem);
       color: var(--text); margin-bottom: 2.5rem;
       max-width: 1200px; margin-left: auto; margin-right: auto;
@@ -260,8 +243,8 @@
 
     .judge-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.6rem;
+      grid-template-columns: repeat(3, 1fr);      /* 3 cards in a row on every screen wider than 480px */
+      gap: clamp(.8rem, 3.2vw, 1.6rem);           /* gap shrinks along with the screen */
       max-width: 1200px; margin: 0 auto;
     }
     .judge-card {
@@ -291,10 +274,25 @@
     .judge-role { color: var(--gold-dim); font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; margin-bottom: .7rem; }
     .judge-bio { color: var(--text-muted); font-size: .85rem; line-height: 1.6; }
 
+    /* Text & padding follow the card's own width: small cards = small text, big cards = full size.
+       (cqw = 1% of the card width. Older browsers just keep the sizes above.) */
+    .judge-card { container-type: inline-size; }
+    @supports (width: 1cqw) {
+      .judge-info { padding: clamp(.7rem, 6cqw, 1.5rem) clamp(.5rem, 5cqw, 1.4rem) clamp(.9rem, 7cqw, 1.7rem); }
+      .judge-name { font-size: clamp(.72rem, 6.4cqw, 1.15rem); margin-bottom: clamp(.15rem, 1.4cqw, .3rem); }
+      .judge-role { font-size: clamp(.6rem, 4.2cqw, .8rem);   margin-bottom: clamp(.3rem, 3cqw, .7rem); }
+      .judge-bio  { font-size: clamp(.66rem, 4.4cqw, .85rem); }
+    }
+
+    /* 480px and under: one card per row, full-size text */
+    @media (max-width: 480px) {
+      .judge-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
+
     #contact { background: var(--bg-deep); padding: 6rem 6vw; border-top: 1px solid var(--border); }
     .contact-body { color: var(--text-muted); line-height: 1.8; text-align: center; font-size: larger; }
     .contact-logo { text-align: center; }
-    .footer-para { font-size: medium; color: #e8edf2ad; text-align: center; line-height: 1.8; font-style: normal; max-width: 735px; }
+    .footer-para { font-size: medium; color: #e8edf2ad; text-align: center; line-height: 1.8; font-style: normal; max-width: 100%; }
     .footer-socials { display: flex; gap: 1rem; justify-content: center; }
     .social-btn {
       width: 54px; height: 54px; border: 1.5px solid rgba(255,255,255,0.18); border-radius: 50%;
@@ -364,13 +362,13 @@
       <li><a href="https://kvpas-official.com/">Home</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="team.html">Team</a></li>
-      <li><a href="competition.html" class="active">Competition</a></li>
+      <li><a href="competition.html">Competition</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 
   <section id="cover">
-    <div class="cover-eyebrow reveal visible"><b>PRABHA'26 Results</b></div>
+    <div class="cover-eyebrow reveal visible"><b>PRABA '26 Results</b></div>
   </section>
 
   <section id="filters">
@@ -384,7 +382,8 @@
   </section>
 
   <section id="judges">
-    <h2 class="section-title reveal">Meet This Year <span>Judge Panel</span></h2>
+    <div class="section-label reveal">Panel</div>
+    <h2 class="section-title reveal">Meet This Year's <span>Judges</span></h2>
     <div class="judge-grid">
       <div class="judge-card reveal">
         <div class="judge-photo">
@@ -440,9 +439,10 @@
     <div class="reveal visible">
       <h2 class="contact-logo"><img src="https://kvpas-official.com/BR.png" style="width: 535px; max-width: 100%;"></h2>
       <p class="contact-body" style="margin-top: -1rem;">SINCE 1959</p>
-      <div style="display: flex; justify-content: center;"><p class="footer-para" style="margin-top: 1rem;">
-        Kegalu Vidyalay Photographic Art Society rooted in 1959, we blend tradition with fresh vision, using light and frame to reflect who we were, who we are, and who we will become.
-      </p></div>
+      <p class="footer-para" style="margin-top: 1rem;">
+        Kegalu Vidyalay Photographic Art Society rooted in 1959, we blend tradition with fresh vision, using light and<br>
+        frame to reflect who we were, who we are, and who we will become.
+      </p>
       <div class="footer-socials" style="margin-top: 3rem;">
         <a href="https://instagram.com/kvpas.official" target="_blank" class="social-btn" title="Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
