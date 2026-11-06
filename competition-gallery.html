@@ -40,6 +40,7 @@
       --text:       #E8EDF2;
       --text-muted: #8fa3b8;
       --footer-text: #a0a9b1;
+      --cat-btn:    #a4bdd8;
       --border:     rgba(245,200,66,0.18);
     }
 
@@ -171,18 +172,18 @@
       font-family: 'Inter', sans-serif;
       font-size: .9rem; font-weight: 500;
       padding: .6rem 1.4rem;
-      border: 1.5px solid var(--gold-dim);
+      border: 1.5px solid #dac6af;
       border-radius: 6px;
       background: transparent;
-      color: var(--gold-dim);
+      color: #d7e2ee;
       cursor: pointer;
       transition: background .2s, color .2s;
     }
     .cat-btn:hover { border-color: var(--gold); color: var(--gold); }
     .cat-btn.active {
-      background: var(--text-muted);
+      background: var(--cat-btn);
       color: var(--bg-deep);
-      border-color: var(--gold);
+      border-color: #c0b99b;
       font-weight: 700;
     }
     
@@ -568,7 +569,7 @@
       scopeEl.querySelectorAll('.sec-btn').forEach(btn => {
         btn.addEventListener('click', () => { activeScope = btn.dataset.scope; renderTabs(); renderGrid(); });
       });
-      catEl.querySelectorAll('.tab-btn').forEach(btn => {
+      catEl.querySelectorAll('.cat-btn').forEach(btn => {
         btn.addEventListener('click', () => { activeCategory = btn.dataset.cat; renderTabs(); renderGrid(); });
       });
     }
