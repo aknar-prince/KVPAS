@@ -40,6 +40,7 @@
       --text:       #E8EDF2;
       --text-muted: #8fa3b8;
       --footer-text: #a0a9b1;
+      --cat-btn:    #a4bdd8;
       --border:     rgba(245,200,66,0.18);
     }
 
@@ -148,24 +149,44 @@
       display: flex; flex-wrap: wrap; justify-content: center;
       gap: .6rem; margin-bottom: 1.2rem;
     }
-    .tab-btn {
+    .sec-btn {
       font-family: 'Inter', sans-serif;
       font-size: .9rem; font-weight: 500;
       padding: .6rem 1.4rem;
       border: 1.5px solid var(--gold-dim);
-      border-radius: 6px;
+      border-radius: 20px;
       background: transparent;
       color: var(--gold-dim);
       cursor: pointer;
       transition: background .2s, color .2s;
     }
-    .tab-btn:hover { border-color: var(--gold); color: var(--gold); }
-    .tab-btn.active {
+    .sec-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .sec-btn.active {
       background: var(--gold);
       color: var(--bg-deep);
       border-color: var(--gold);
       font-weight: 700;
     }
+    
+    .cat-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem; font-weight: 500;
+      padding: .6rem 1.4rem;
+      border: 1.5px solid #dac6af;
+      border-radius: 4px;
+      background: transparent;
+      color: #d7e2ee;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .cat-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .cat-btn.active {
+      background: var(--cat-btn);
+      color: var(--bg-deep);
+      border-color: #c0b99b;
+      font-weight: 700;
+    }
+    
     .cat-row .tab-btn { font-size: .85rem; padding: .55rem 1.2rem; }
 
     #results { background: var(--bg-main); padding: 2rem 6vw 5rem; }
@@ -260,8 +281,8 @@
 
     .judge-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.6rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(.8rem, 3.2vw, 1.6rem);
       max-width: 1200px; margin: 0 auto;
     }
     .judge-card {
@@ -287,9 +308,21 @@
       object-fit: cover; object-position: center;
     }
     .judge-info { padding: 1.5rem 1.4rem 1.7rem; }
-    .judge-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--text); margin-bottom: .3rem; }
+    .judge-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
     .judge-role { color: var(--gold-dim); font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; margin-bottom: .7rem; }
     .judge-bio { color: var(--text-muted); font-size: .85rem; line-height: 1.6; }
+    .judge-card { container-type: inline-size; }
+
+    @supports (width: 1cqw) {
+      .judge-info { padding: clamp(.7rem, 6cqw, 1.5rem) clamp(.5rem, 5cqw, 1.4rem) clamp(.9rem, 7cqw, 1.7rem); }
+      .judge-name { font-size: clamp(.72rem, 6.4cqw, 1.15rem); margin-bottom: clamp(.5rem, 1.4cqw, .3rem); }
+      .judge-role { font-size: clamp(.6rem, 4.2cqw, .8rem);   margin-bottom: clamp(.3rem, 3cqw, .7rem); }
+      .judge-bio  { font-size: clamp(.66rem, 4.4cqw, .85rem); }
+    }
+
+    @media (max-width: 480px) {
+      .judge-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
 
     #contact { background: var(--bg-deep); padding: 6rem 6vw; border-top: 1px solid var(--border); }
     .contact-body { color: var(--text-muted); line-height: 1.8; text-align: center; font-size: larger; }
@@ -491,14 +524,14 @@
 
   <script>
     const SCOPES = [
-      { id: 'intra', label: 'Intra School' },
-      { id: 'inter', label: 'Inter School' }
+      { id: 'intra', label: 'INNER SCHOOL' },
+      { id: 'inter', label: 'INTER SCHOOL' }
     ];
 
     const CATEGORIES = [
       { id: 'colour',          label: 'Colour' },
       { id: 'monochrome',      label: 'Monochrome' },
-      { id: 'themed-mobile',   label: 'Themed-Mobile' },
+      { id: 'mobile',          label: 'Mobile' },
       { id: 'nature-wildlife', label: 'Nature & Wildlife' },
       { id: 'street-travel',   label: 'Street & Travel' }
     ];
@@ -527,16 +560,16 @@
       const scopeEl = document.getElementById('scope-tabs');
       const catEl = document.getElementById('cat-tabs');
       scopeEl.innerHTML = SCOPES.map(s =>
-        `<button class="tab-btn ${s.id === activeScope ? 'active' : ''}" data-scope="${s.id}">${s.label}</button>`
+        `<button class="sec-btn ${s.id === activeScope ? 'active' : ''}" data-scope="${s.id}">${s.label}</button>`
       ).join('');
       catEl.innerHTML = CATEGORIES.map(c =>
-        `<button class="tab-btn ${c.id === activeCategory ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>`
+        `<button class="cat-btn ${c.id === activeCategory ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>`
       ).join('');
 
-      scopeEl.querySelectorAll('.tab-btn').forEach(btn => {
+      scopeEl.querySelectorAll('.sec-btn').forEach(btn => {
         btn.addEventListener('click', () => { activeScope = btn.dataset.scope; renderTabs(); renderGrid(); });
       });
-      catEl.querySelectorAll('.tab-btn').forEach(btn => {
+      catEl.querySelectorAll('.cat-btn').forEach(btn => {
         btn.addEventListener('click', () => { activeCategory = btn.dataset.cat; renderTabs(); renderGrid(); });
       });
     }
