@@ -40,7 +40,8 @@
       --text:       #E8EDF2;
       --text-muted: #8fa3b8;
       --footer-text: #a0a9b1;
-      --cat-btn:    #a4bdd8;
+      --cat-btn:    #d8c6a4;
+      --img-title:  #c4b980;
       --border:     rgba(245,200,66,0.18);
     }
 
@@ -179,7 +180,7 @@
       cursor: pointer;
       transition: background .2s, color .2s;
     }
-    .cat-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .cat-btn:hover { border-color: var(--gold); color: #fff7da; }
     .cat-btn.active {
       background: var(--cat-btn);
       color: var(--bg-deep);
@@ -204,7 +205,7 @@
       max-width: 1200px; margin: 0 auto 1.6rem;
     }
     .placement-card {
-      width: 260px;
+      width: 370px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -251,10 +252,10 @@
 
     .placement-info { padding: 1rem 1.1rem 1.2rem; }
     .placement-title {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: var(--gold-dim);
-      font-size: 1.02rem;
+      font-family: monospace;
+      font-variant: all-petite-caps; font-weight: 1px;
+      color: var(--img-title);
+      font-size: 20px;
       margin-bottom: .5rem;
     }
     .placement-name { color: var(--text); font-size: .98rem; font-weight: 500; margin-bottom: .2rem; }
@@ -551,6 +552,10 @@
     // Example: 'intra-colour-1st': { title: 'Golden Hour', name: 'A. Perera', school: 'Kegalu Vidyalaya', photo: 'intra-colour-1st.jpg' }
     const ENTRIES = {
       // 'intra-colour-1st': { name: 'Student Name', school: 'School Name', photo: 'intra-colour-1st.jpg' },
+      'intra-colour-1st': { title: 'ASPHALT8', name: 'Aknar Prince', school: 'Kegalu Vidyalaya', photo: 'results/inner/c/1.png' },
+      'intra-colour-2nd': { title: 'WASTED', name: 'Henry Wilson', school: 'St. Mariya Collage', photo: 'results/inner/c/2.png' },
+      'intra-colour-3rd': { title: 'FRIENDSHIP', name: 'Jorge Toshi', school: 'Oxford University', photo: 'results/inner/c/3.jpeg' },
+      
     };
 
     let activeScope = 'intra';
@@ -590,7 +595,7 @@
             ${p.medal ? `<div class="placement-medal">${p.medal}</div>` : ''}
           </div>
           <div class="placement-info">
-            <div class="placement-title">"${entry.title}"</div>
+            <div class="placement-title">${entry.title}</div>
             <div class="placement-name">${entry.name}</div>
             <div class="placement-school">${entry.school}</div>
           </div>
