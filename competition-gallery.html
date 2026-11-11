@@ -192,7 +192,7 @@
 
     #results { background: var(--bg-main); padding: 2rem 6vw 5rem; }
     .results-heading {
-      font-family: 'Playfair Display', serif;
+      font-family: system-ui;
       font-size: clamp(1.5rem, 3vw, 2rem);
       color: var(--text); text-align: center;
       margin-bottom: 2.5rem;
@@ -212,7 +212,6 @@
       overflow: hidden;
       transition: transform .2s, border-color .2s;
     }
-    .placement-card:hover { transform: translateY(-4px); border-color: var(--gold-dim); }
 
     .placement-photo {
       position: relative;
@@ -382,9 +381,9 @@
     </a>
     <ul class="nav-links">
       <li><a href="https://kvpas-official.com/">HOME</a></li>
-      <li><a href="gallery.html">GALLERY</a></li>
+      <li><a href="gallery.html">EVENTS</a></li>
       <li><a href="team.html">TEAM</a></li>
-      <li><a href="competition.html" class="active">COMPETITION</a></li>
+      <li><a href="competition.html">COMPETITION</a></li>
       <li><a href="contact.html">CONTACT</a></li>
     </ul>
     <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.mobile-nav').classList.add('open')">
@@ -396,9 +395,9 @@
     <button class="mobile-nav-close" aria-label="Close menu" onclick="document.querySelector('.mobile-nav').classList.remove('open')">&times;</button>
     <ul>
       <li><a href="https://kvpas-official.com/">Home</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="gallery.html">Events</a></li>
       <li><a href="team.html">Team</a></li>
-      <li><a href="competition.html" class="active">Competition</a></li>
+      <li><a href="competition.html">Competition</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
