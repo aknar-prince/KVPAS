@@ -200,12 +200,21 @@
     .results-heading span { color: var(--gold); }
 
     .placement-row {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 1.6rem;
-      max-width: 1200px; margin: 0 auto 1.6rem;
+      display: flex; flex-wrap: nowrap;               /* never wrap: 1st-2nd-3rd stay on one line */
+      justify-content: center;
+      align-items: flex-start;                        /* each box is as tall as its own photo needs */
+      --gap: clamp(.5rem, 2.4vw, 1.6rem);             /* gap shrinks with the screen */
+      gap: var(--gap);
+      max-width: 1200px; margin: 0 auto clamp(.8rem, 2.4vw, 1.6rem);
+    }
+
+    @media (max-width: 480px) {
+      .placement-row { grid-template-columns: 1fr; gap: 1.6rem; }
     }
     .placement-card {
-      width: 370px;
+      flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));   /* same width in every row: 3 fit per line, max 370px */
+      min-width: 0;
+      container-type: inline-size;                    /* lets the text below scale with the box */
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -215,7 +224,7 @@
 
     .placement-photo {
       position: relative;
-      aspect-ratio: 4/3;
+      aspect-ratio: 4/3;                              /* placeholder shape until a photo loads, then the photo's own ratio */
       background: linear-gradient(135deg, #1e3a5a 0%, #0f1923 100%);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
@@ -224,8 +233,10 @@
     .placement-photo img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
+      object-fit: cover;                              /* box already matches the photo, so nothing is cropped */
+      opacity: 0; transition: opacity .35s ease;
     }
+    .placement-photo.has-photo img { opacity: 1; }
     .placement-badge {
       position: absolute; top: 10px; left: 10px;
       font-family: 'Big Shoulders Stencil Display', cursive;
@@ -259,6 +270,20 @@
     }
     .placement-name { color: var(--text); font-size: .98rem; font-weight: 500; margin-bottom: .2rem; }
     .placement-school { color: var(--text-muted); font-size: .8rem; }
+    .placement-title, .placement-name, .placement-school { overflow-wrap: anywhere; }
+
+    /* Everything inside a box scales with that box's width (cqw = 1% of the box).
+       Older browsers simply keep the normal sizes above. */
+    @supports (width: 1cqw) {
+      .placement-badge { top: clamp(5px, 2.6cqw, 10px); left: clamp(5px, 2.6cqw, 10px);
+                         font-size: clamp(.48rem, 3.2cqw, .72rem); padding: clamp(.12rem, .9cqw, .3rem) clamp(.3rem, 1.9cqw, .7rem); }
+      .placement-medal { top: clamp(4px, 2.2cqw, 8px); right: clamp(4px, 2.2cqw, 8px);
+                         width: clamp(18px, 8.6cqw, 32px); height: clamp(18px, 8.6cqw, 32px); font-size: clamp(.7rem, 3.6cqw, 1.15rem); }
+      .placement-info  { padding: clamp(.5rem, 4.4cqw, 1rem) clamp(.5rem, 4.8cqw, 1.1rem) clamp(.6rem, 5cqw, 1.2rem); }
+      .placement-title { font-size: clamp(.62rem, 5.4cqw, 20px); margin-bottom: clamp(.25rem, 1.6cqw, .5rem); }
+      .placement-name  { font-size: clamp(.64rem, 4.6cqw, .98rem); }
+      .placement-school{ font-size: clamp(.56rem, 3.8cqw, .8rem); }
+    }
 
     #judges { background: var(--bg-deep); padding: 5rem 6vw; }
     .section-label {
@@ -578,6 +603,16 @@
       });
     }
 
+    // Give the photo box the photograph's own shape (clamped so an extreme panorama can't make a sliver)
+    function photoLoaded(img) {
+      const box = img.parentElement;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      box.style.aspectRatio = Math.min(Math.max(ratio, 0.6), 2.2).toFixed(4);
+      box.classList.add('has-photo');
+      const placeholder = box.querySelector('svg');
+      if (placeholder) placeholder.style.display = 'none';
+    }
+
     function renderCard(p) {
       const key = `${activeScope}-${activeCategory}-${p.id}`;
       const entry = ENTRIES[key] || { title: 'Untitled', name: 'To Be Announced', school: '', photo: `${key}.jpg` };
@@ -588,7 +623,7 @@
               <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
             </svg>
             <img src="${entry.photo}" alt="${p.label}"
-                 onload="this.previousElementSibling.style.display='none'"
+                 onload="photoLoaded(this)"
                  onerror="this.style.display='none'">
             <div class="placement-badge ${p.badge}">${p.label}</div>
             ${p.medal ? `<div class="placement-medal">${p.medal}</div>` : ''}
