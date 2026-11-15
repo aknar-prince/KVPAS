@@ -277,9 +277,9 @@
        Older browsers simply keep the normal sizes above. */
     @supports (width: 1cqw) {
       .placement-badge { top: clamp(5px, 2.6cqw, 10px); left: clamp(5px, 2.6cqw, 10px);
-                         font-size: clamp(.48rem, 3.2cqw, .72rem); padding: clamp(.12rem, .9cqw, .3rem) clamp(.3rem, 1.9cqw, .7rem); }
-      .placement-medal { top: clamp(4px, 2.2cqw, 8px); right: clamp(4px, 2.2cqw, 8px);
-                         width: clamp(18px, 8.6cqw, 32px); height: clamp(18px, 8.6cqw, 32px); font-size: clamp(.7rem, 3.6cqw, 1.15rem); }
+                         font-size: clamp(15px, 3.2cqw, .72rem); padding: clamp(.12rem, .9cqw, .3rem) clamp(.3rem, 1.9cqw, .7rem); }
+      .placement-medal { top: clamp(6px, 2.2cqw, 8px); right: clamp(7px, 2.2cqw, 8px);
+                         width: clamp(45px, 8.6cqw, 32px); height: clamp(54px, 8.6cqw, 32px); font-size: clamp(30px, 3.6cqw, 1.15rem); }
       .placement-info  { padding: clamp(.5rem, 4.4cqw, 1rem) clamp(.5rem, 4.8cqw, 1.1rem) clamp(.6rem, 5cqw, 1.2rem); }
       .placement-title { font-size: clamp(.62rem, 5.4cqw, 20px); margin-bottom: clamp(.25rem, 1.6cqw, .5rem); }
       .placement-name  { font-size: clamp(.64rem, 4.6cqw, .98rem); }
@@ -577,10 +577,35 @@
     // Example: 'intra-colour-1st': { title: 'Golden Hour', name: 'A. Perera', school: 'Kegalu Vidyalaya', photo: 'intra-colour-1st.jpg' }
     const ENTRIES = {
       // 'intra-colour-1st': { name: 'Student Name', school: 'School Name', photo: 'intra-colour-1st.jpg' },
-      'intra-colour-1st': { title: 'ASPHALT8', name: 'Aknar Prince', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/1.jpg' },
-      'intra-colour-2nd': { title: 'WASTED', name: 'Henry Wilson', school: 'St. Mariya Collage', photo: 'https://kvpas-official.com/results/inner/c/2.jpg' },
-      'intra-colour-3rd': { title: 'FRIENDSHIP', name: 'Jorge Toshi', school: 'Oxford University', photo: 'https://kvpas-official.com/results/inner/c/3.jpg' },
-      
+      'inner-colour-1st': { title: 'Floating Rings', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/1.jpeg' },
+      'inner-colour-2nd': { title: 'A Art of the Light', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/2.jpeg' },
+      'inner-colour-3rd': { title: 'The Quiet Merchant', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/3.jpg' },
+      'inner-colour-merit-1': { title: 'Urban Phantom', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/M1.jpg' },
+      'inner-monochrome-1st': { title: 'A Story Behind the Feelings', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/1.jpg' },
+      'inner-monochrome-merit-1': { title: 'Silent Supplication', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/M1.jpg' },
+      'inner-monochrome-merit-2': { title: 'Friendship', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/M2.jpg' },
+      'inner-monochrome-merit-3': { title: 'Talking Eyes', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/M3.jpg' },
+      'inner-mobile-1st': { title: 'Parallel Worlds', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/m/1.jpeg' },
+      'inner-mobile-2nd': { title: 'Good Times', name: 'Sahiru Gunarathne', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/m/2.jpg' },
+      'inner-mobile-3rd': { title: 'The Blue Hour', name: 'Kaveen Induwara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/m/3.heic' },
+      'inner-nature-wildlife-1st': { title: 'Golden Moment', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/1.jpg' },
+      'inner-nature-wildlife-2nd': { title: 'Paradise', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/2.jpg' },
+      'inner-nature-wildlife-3rd': { title: '', name: 'Vishwa Vinood', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/3.jpeg' },
+      'inner-nature-wildlife-merit-1': { title: 'Look me in the Eye', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/M1.jpg' },
+      'inter-colour-1st': { title: 'Where The Land Meets The Light', name: 'Bunuja Deegayu', school: 'Ananda College', photo: 'https://kvpas-official.com/results/inter/c/1.jpg' },
+      'inter-colour-2nd': { title: 'The Watchful Eye', name: 'Bunuja Deegayu', school: 'Ananda College', photo: 'https://kvpas-official.com/results/inter/c/2.png' },
+      'inter-colour-3rd': { title: 'Torch Bearers', name: 'Dumikha Weerasuriya', school: 'S. Thomas\' Preparatory School, Kollupitiya', photo: 'https://kvpas-official.com/results/inter/c/3.jpg' },
+      'inter-colour-merit-1': { title: 'Happy and Sad', name: 'Saheli Lavanya', school: 'Maliyadeva Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/M1.jpg' },
+      'inter-colour-merit-2': { title: 'Melody of Devotion', name: 'Prabhavee Mohottige', school: 'Kalutara Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/M2.jpg' },
+      'inter-colour-merit-3': { title: 'Silhoutte Dance', name: 'Sanuthi Vinsadi', school: 'Devi Balika Vidyalaya, Colombo 08', photo: 'https://kvpas-official.com/results/inter/c/M3.jpg' },
+      'inter-colour-merit-4': { title: 'Harvest Hues', name: 'Senithma Rathnayake', school: 'Mahamaya Girls\' College, Kandy', photo: 'https://kvpas-official.com/results/inter/c/M4.jpg' },
+      'inter-colour-merit-5': { title: 'Two Face', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College, Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/c/M5.jpg' },
+      'inter-colour-merit-6': { title: 'Looking under', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College, Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/c/M6.jpg' },
+      'inter-colour-exhibit-1': { title: 'The Look', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College, Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/c/E1.jpg' },
+      'inter-colour-exhibit-2': { title: 'Untitled', name: 'Saheli Lavanya', school: 'Maliyadeva Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/E2.jpg' },
+      'inter-colour-exhibit-3': { title: 'Flight of Imagination', name: 'Prabhavee Mohottige', school: 'Kalutara Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/E3.png' },
+      'inter-monochrome-1st': { title: 'The Last Dance', name: 'Bunuja Deegayu', school: 'Ananda College', photo: 'https://kvpas-official.com/results/inter/mc/1.jpg' },
+
     };
 
     let activeScope = 'intra';
