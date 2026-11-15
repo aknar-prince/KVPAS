@@ -200,12 +200,18 @@
     .results-heading span { color: var(--gold); }
 
     .placement-row {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 1.6rem;
-      max-width: 1200px; margin: 0 auto 1.6rem;
+      display: flex; flex-wrap: wrap;               /* never wrap: 1st-2nd-3rd stay on one line */
+      justify-content: center;
+      align-items: center;                        /* each box is as tall as its own photo needs */
+      --gap: clamp(.5rem, 2.4vw, 1.6rem);             /* gap shrinks with the screen */
+      gap: var(--gap);
+      max-width: 1200px; margin: 0 auto clamp(.8rem, 2.4vw, 1.6rem);
     }
+
     .placement-card {
-      width: 370px;
+      flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));   /* same width in every row: 3 fit per line, max 370px */
+      min-width: 0;
+      container-type: inline-size;                    /* lets the text below scale with the box */
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -215,7 +221,7 @@
 
     .placement-photo {
       position: relative;
-      aspect-ratio: 4/3;
+      aspect-ratio: 4/3;                              /* placeholder shape until a photo loads, then the photo's own ratio */
       background: linear-gradient(135deg, #1e3a5a 0%, #0f1923 100%);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
@@ -224,8 +230,10 @@
     .placement-photo img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
+      object-fit: cover;                              /* box already matches the photo, so nothing is cropped */
+      opacity: 0; transition: opacity .35s ease;
     }
+    .placement-photo.has-photo img { opacity: 1; }
     .placement-badge {
       position: absolute; top: 10px; left: 10px;
       font-family: 'Big Shoulders Stencil Display', cursive;
@@ -259,6 +267,24 @@
     }
     .placement-name { color: var(--text); font-size: .98rem; font-weight: 500; margin-bottom: .2rem; }
     .placement-school { color: var(--text-muted); font-size: .8rem; }
+    .placement-title, .placement-name, .placement-school { overflow-wrap: anywhere; }
+
+    @media (max-width: 480px) {
+      .placement-row { display: grid; justify-content: unset; }
+    }
+
+    /* Everything inside a box scales with that box's width (cqw = 1% of the box).
+       Older browsers simply keep the normal sizes above. */
+    @supports (width: 1cqw) {
+      .placement-badge { top: clamp(5px, 2.6cqw, 10px); left: clamp(5px, 2.6cqw, 10px);
+                         font-size: clamp(15px, 3.2cqw, .72rem); padding: clamp(.12rem, .9cqw, .3rem) clamp(.3rem, 1.9cqw, .7rem); }
+      .placement-medal { top: clamp(6px, 2.2cqw, 8px); right: clamp(7px, 2.2cqw, 8px);
+                         width: clamp(45px, 8.6cqw, 32px); height: clamp(54px, 8.6cqw, 32px); font-size: clamp(30px, 3.6cqw, 1.15rem); }
+      .placement-info  { padding: clamp(.5rem, 4.4cqw, 1rem) clamp(.5rem, 4.8cqw, 1.1rem) clamp(.6rem, 5cqw, 1.2rem); }
+      .placement-title { font-size: clamp(.62rem, 5.4cqw, 20px); margin-bottom: clamp(.25rem, 1.6cqw, .5rem); }
+      .placement-name  { font-size: clamp(.64rem, 4.6cqw, .98rem); }
+      .placement-school{ font-size: clamp(.56rem, 3.8cqw, .8rem); }
+    }
 
     #judges { background: var(--bg-deep); padding: 5rem 6vw; }
     .section-label {
@@ -551,10 +577,35 @@
     // Example: 'intra-colour-1st': { title: 'Golden Hour', name: 'A. Perera', school: 'Kegalu Vidyalaya', photo: 'intra-colour-1st.jpg' }
     const ENTRIES = {
       // 'intra-colour-1st': { name: 'Student Name', school: 'School Name', photo: 'intra-colour-1st.jpg' },
-      'intra-colour-1st': { title: 'ASPHALT8', name: 'Aknar Prince', school: 'Kegalu Vidyalaya', photo: 'results/inner/c/1.png' },
-      'intra-colour-2nd': { title: 'WASTED', name: 'Henry Wilson', school: 'St. Mariya Collage', photo: 'results/inner/c/2.png' },
-      'intra-colour-3rd': { title: 'FRIENDSHIP', name: 'Jorge Toshi', school: 'Oxford University', photo: 'results/inner/c/3.jpeg' },
-      
+      'intra-colour-1st': { title: 'Floating Rings', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/1.jpeg' },
+      'intra-colour-2nd': { title: 'A Art of the Light', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/2.jpeg' },
+      'intra-colour-3rd': { title: 'The Quiet Merchant', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/3.jpg' },
+      'intra-colour-merit-1': { title: 'Urban Phantom', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/M1.jpg' },
+      'intra-monochrome-1st': { title: 'A Story Behind the Feelings', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/1.jpg' },
+      'intra-monochrome-merit-1': { title: 'Silent Supplication', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/M1.jpg' },
+      'intra-monochrome-merit-2': { title: 'Friendship', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/M2.jpg' },
+      'intra-monochrome-merit-3': { title: 'Talking Eyes', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/mc/M3.jpg' },
+      'intra-mobile-1st': { title: 'Parallel Worlds', name: 'Ravihara Nirmal', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/m/1.jpeg' },
+      'intra-mobile-2nd': { title: 'Good Times', name: 'Sahiru Gunarathne', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/m/2.jpg' },
+      'intra-mobile-3rd': { title: 'The Blue Hour', name: 'Kaveen Induwara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/m/3.jpg' },
+      'intra-nature-wildlife-1st': { title: 'Golden Moment', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/1.jpg' },
+      'intra-nature-wildlife-2nd': { title: 'Paradise', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/2.jpg' },
+      'intra-nature-wildlife-3rd': { title: '', name: 'Vishwa Vinood', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/3.jpeg' },
+      'intra-nature-wildlife-merit-1': { title: 'Look me in the Eye', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/nw/M1.jpg' },
+      'inter-colour-1st': { title: 'Where The Land Meets The Light', name: 'Bunuja Deegayu', school: 'Ananda College', photo: 'https://kvpas-official.com/results/inter/c/1.jpg' },
+      'inter-colour-2nd': { title: 'The Watchful Eye', name: 'Bunuja Deegayu', school: 'Ananda College', photo: 'https://kvpas-official.com/results/inter/c/2.png' },
+      'inter-colour-3rd': { title: 'Torch Bearers', name: 'Dumikha Weerasuriya', school: 'S. Thomas\' Preparatory School, Kollupitiya', photo: 'https://kvpas-official.com/results/inter/c/3.jpg' },
+      'inter-colour-merit-1': { title: 'Happy and Sad', name: 'Saheli Lavanya', school: 'Maliyadeva Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/M1.jpg' },
+      'inter-colour-merit-2': { title: 'Melody of Devotion', name: 'Prabhavee Mohottige', school: 'Kalutara Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/M2.jpg' },
+      'inter-colour-merit-3': { title: 'Silhoutte Dance', name: 'Sanuthi Vinsadi', school: 'Devi Balika Vidyalaya, Colombo 08', photo: 'https://kvpas-official.com/results/inter/c/M3.jpg' },
+      'inter-colour-merit-4': { title: 'Harvest Hues', name: 'Senithma Rathnayake', school: 'Mahamaya Girls\' College, Kandy', photo: 'https://kvpas-official.com/results/inter/c/M4.jpg' },
+      'inter-colour-merit-5': { title: 'Two Face', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College, Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/c/M5.jpg' },
+      'inter-colour-merit-6': { title: 'Looking under', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College, Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/c/M6.jpg' },
+      'inter-colour-exhibit-1': { title: 'The Look', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College, Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/c/E1.jpg' },
+      'inter-colour-exhibit-2': { title: 'Untitled', name: 'Saheli Lavanya', school: 'Maliyadeva Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/E2.jpg' },
+      'inter-colour-exhibit-3': { title: 'Flight of Imagination', name: 'Prabhavee Mohottige', school: 'Kalutara Balika Vidyalaya', photo: 'https://kvpas-official.com/results/inter/c/E3.png' },
+      'inter-monochrome-1st': { title: 'The Last Dance', name: 'Bunuja Deegayu', school: 'Ananda College', photo: 'https://kvpas-official.com/results/inter/mc/1.jpg' },
+
     };
 
     let activeScope = 'intra';
@@ -578,6 +629,16 @@
       });
     }
 
+    // Give the photo box the photograph's own shape (clamped so an extreme panorama can't make a sliver)
+    function photoLoaded(img) {
+      const box = img.parentElement;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      box.style.aspectRatio = Math.min(Math.max(ratio, 0.6), 2.2).toFixed(4);
+      box.classList.add('has-photo');
+      const placeholder = box.querySelector('svg');
+      if (placeholder) placeholder.style.display = 'none';
+    }
+
     function renderCard(p) {
       const key = `${activeScope}-${activeCategory}-${p.id}`;
       const entry = ENTRIES[key] || { title: 'Untitled', name: 'To Be Announced', school: '', photo: `${key}.jpg` };
@@ -588,7 +649,7 @@
               <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
             </svg>
             <img src="${entry.photo}" alt="${p.label}"
-                 onload="this.previousElementSibling.style.display='none'"
+                 onload="photoLoaded(this)"
                  onerror="this.style.display='none'">
             <div class="placement-badge ${p.badge}">${p.label}</div>
             ${p.medal ? `<div class="placement-medal">${p.medal}</div>` : ''}
@@ -605,7 +666,7 @@
       const scope = SCOPES.find(s => s.id === activeScope);
       const cat = CATEGORIES.find(c => c.id === activeCategory);
       document.getElementById('results-heading').innerHTML =
-        `${scope.label} <span>&mdash; ${cat.label}</span>`;
+        `${scope.label} <br><span>&mdash; ${cat.label} &mdash;</span>`;
 
       // Three separate rows: top 3, then merits, then exhibits — each its own centered row.
       const top3 = PLACEMENTS.filter(p => ['1st', '2nd', '3rd'].includes(p.id));
