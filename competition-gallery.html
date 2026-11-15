@@ -200,17 +200,14 @@
     .results-heading span { color: var(--gold); }
 
     .placement-row {
-      display: flex; flex-wrap: nowrap;               /* never wrap: 1st-2nd-3rd stay on one line */
+      display: flex; flex-wrap: wrap;               /* never wrap: 1st-2nd-3rd stay on one line */
       justify-content: center;
-      align-items: flex-start;                        /* each box is as tall as its own photo needs */
+      align-items: center;                        /* each box is as tall as its own photo needs */
       --gap: clamp(.5rem, 2.4vw, 1.6rem);             /* gap shrinks with the screen */
       gap: var(--gap);
       max-width: 1200px; margin: 0 auto clamp(.8rem, 2.4vw, 1.6rem);
     }
 
-    @media (max-width: 480px) {
-      .placement-row { grid-template-columns: 1fr; gap: 1.6rem; }
-    }
     .placement-card {
       flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));   /* same width in every row: 3 fit per line, max 370px */
       min-width: 0;
@@ -271,6 +268,10 @@
     .placement-name { color: var(--text); font-size: .98rem; font-weight: 500; margin-bottom: .2rem; }
     .placement-school { color: var(--text-muted); font-size: .8rem; }
     .placement-title, .placement-name, .placement-school { overflow-wrap: anywhere; }
+
+    @media (max-width: 480px) {
+      .placement-row { display: grid; justify-content: unset; }
+    }
 
     /* Everything inside a box scales with that box's width (cqw = 1% of the box).
        Older browsers simply keep the normal sizes above. */
@@ -640,7 +641,7 @@
       const scope = SCOPES.find(s => s.id === activeScope);
       const cat = CATEGORIES.find(c => c.id === activeCategory);
       document.getElementById('results-heading').innerHTML =
-        `${scope.label} <span>&mdash; ${cat.label}</span>`;
+        `${scope.label} <br><span>&mdash; ${cat.label} &mdash;</span>`;
 
       // Three separate rows: top 3, then merits, then exhibits — each its own centered row.
       const top3 = PLACEMENTS.filter(p => ['1st', '2nd', '3rd'].includes(p.id));
