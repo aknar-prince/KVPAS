@@ -213,7 +213,7 @@
       align-items: center;
       columns: 3;
       column-gap: 15px;
-      --gap: clamp(.5rem, 1.5vw, 1.6rem);             /* gap shrinks with the screen */
+      --gap: clamp(.5rem, 1.5vw, 1.6rem);
       gap: var(--gap);
       max-width: 2500px;
 
@@ -230,9 +230,9 @@
     }
 
     .placement-card {
-      flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));   /* same width in every row: 3 fit per line, max 370px */
+      flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));
       min-width: 0;
-      container-type: inline-size;                    /* lets the text below scale with the box */
+      container-type: inline-size;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -242,7 +242,7 @@
 
     .placement-photo {
       position: relative;
-      aspect-ratio: 4/3;                              /* placeholder shape until a photo loads, then the photo's own ratio */
+      aspect-ratio: 4/3;
       background: linear-gradient(135deg, #1e3a5a 0%, #0f1923 100%);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
@@ -251,7 +251,7 @@
     .placement-photo img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover;                              /* box already matches the photo, so nothing is cropped */
+      object-fit: cover;
       opacity: 0; transition: opacity .35s ease;
     }
     .placement-photo.has-photo img { opacity: 1; }
@@ -295,8 +295,6 @@
       .placement-row-win { display: grid; justify-content: unset; grid-auto-flow: row; }
     }
 
-    /* Everything inside a box scales with that box's width (cqw = 1% of the box).
-       Older browsers simply keep the normal sizes above. */
     @supports (width: 1cqw) {
       .placement-badge { top: clamp(5px, 2.6cqw, 10px); left: clamp(5px, 2.6cqw, 10px);
                          font-size: clamp(15px, 3.2cqw, .72rem); padding: clamp(.12rem, .9cqw, .3rem) clamp(.3rem, 1.9cqw, .7rem); }
@@ -601,8 +599,6 @@
       { id: 'exhibit-5', label: 'Exhibit', badge: 'badge-exhibit' }
     ];
 
-    // Fill these in as results are announced. Key = "scope-category-placement".
-    // Example: 'intra-colour-1st': { title: 'Golden Hour', name: 'A. Perera', school: 'Kegalu Vidyalaya', photo: 'intra-colour-1st.jpg' }
     const ENTRIES = {
       // 'intra-colour-1st': { name: 'Student Name', school: 'School Name', photo: 'intra-colour-1st.jpg' },
       'intra-colour-1st': { title: 'Floating Rings', name: 'Randhika Kulasekara', school: 'Kegalu Vidyalaya', photo: 'https://kvpas-official.com/results/inner/c/1.jpeg' },
@@ -663,7 +659,7 @@
       'inter-nature-wildlife-merit-4': { title: 'Where silence takes flight', name: 'Menuja Wiyanduwa', school: 'D.S. Senanayake College, Colombo 07', photo: 'https://kvpas-official.com/results/inter/nw/M4.jpg' },
       'inter-nature-wildlife-merit-5': { title: 'Life Cycle of a Butterfly', name: 'Pasangi Muditha Athukorala', school: 'Sumedha College, Gampaha', photo: 'https://kvpas-official.com/results/inter/nw/M5.jpg' },
       'inter-nature-wildlife-exhibit-1': { title: 'Drop', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/nw/E1.jpg' },
-      'inter-nature-wildlife-exhibit-2': { title: '', name: 'Manjula', school: 'To Be Announced', photo: 'https://kvpas-official.com/results/inter/nw/E2.jpg' },
+      'inter-nature-wildlife-exhibit-2': { title: '', name: 'Gihansith Sathnidu Illangakoon', school: ' S. Thomas\' Preparatory School, Kollupitiya', photo: 'https://kvpas-official.com/results/inter/nw/E2.jpg' },
       'inter-nature-wildlife-exhibit-3': { title: 'The giant weakling', name: 'Inuli Wickramarachchi', school: 'Mahamaya Girls\' College, Kandy', photo: 'https://kvpas-official.com/results/inter/nw/E3.jpg' },
       'inter-nature-wildlife-exhibit-4': { title: 'Sneak Peak', name: 'Uthum Methsara', school: 'Sivali Central College, Rathnapura', photo: 'https://kvpas-official.com/results/inter/nw/E4.jpg' },
       'inter-street-travel-1st': { title: 'Move Forward', name: 'Yethum Sandil Rupasinghe', school: 'S Thomas\' College Mount Lavinia', photo: 'https://kvpas-official.com/results/inter/s/1.jpg' },
@@ -701,7 +697,6 @@
       });
     }
 
-    // Give the photo box the photograph's own shape (clamped so an extreme panorama can't make a sliver)
     function photoLoaded(img) {
       const box = img.parentElement;
       const ratio = img.naturalWidth / img.naturalHeight;
@@ -712,8 +707,7 @@
     }
 
     function renderCard(p) {
-      const key = `${activeScope}-${activeCategory}-${p.id}`;
-      const entry = ENTRIES[key] || { title: 'Untitled', name: 'To Be Announced', school: '', photo: `${key}.jpg` };
+      const entry = ENTRIES[`${activeScope}-${activeCategory}-${p.id}`];
       return `
         <div class="placement-card reveal visible">
           <div class="placement-photo">
@@ -740,16 +734,24 @@
       document.getElementById('results-heading').innerHTML =
         `${scope.label} <div class="results-head-cat"><span>&mdash; ${cat.label} &mdash;</span></div>`;
 
-      // Three separate rows: top 3, then merits, then exhibits — each its own centered row.
       const top3 = PLACEMENTS.filter(p => ['1st', '2nd', '3rd'].includes(p.id));
       const merits = PLACEMENTS.filter(p => p.id.startsWith('merit'));
       const exhibits = PLACEMENTS.filter(p => p.id.startsWith('exhibit'));
 
+      const hasPhoto = (p) => {
+        const e = ENTRIES[`${activeScope}-${activeCategory}-${p.id}`];
+        return !!(e && e.photo);
+      };
+      const cardsHtml = (list) => list.filter(hasPhoto).map(renderCard).join('');
+
+      const winnersHtml = cardsHtml(top3);
+      const lowerHtml = cardsHtml([...merits, ...exhibits]);
+
       const container = document.getElementById('placement-grid');
-      container.innerHTML = `
-        <div class="placement-row-win">${top3.map(renderCard).join('')}</div>
-        <div class="placement-row">${merits.map(renderCard).join('')} ${exhibits.map(renderCard).join('')}</div>
-      `;
+      container.innerHTML =
+        (winnersHtml ? `<div class="placement-row-win">${winnersHtml}</div>` : '') +
+        (lowerHtml ? `<div class="placement-row">${lowerHtml}</div>` : '') ||
+        `<p class="no-results">There are no awarded photographs for this category.</p>`;
     }
 
     renderTabs();
