@@ -753,15 +753,18 @@
       const cardsHtml = (list) => list.filter(hasPhoto).map(renderCard).join('');
 
       // A row with no boxes is skipped completely, so no empty gaps are left behind.
-      const rows = [top3, merits, exhibits].map(cardsHtml).filter(html => html);
+      const winnersHtml = cardsHtml(top3);
+
+      // Put every Merit and Exhibit card in ONE lower columns container.
+      // When an entry has no photo, it is filtered out before rendering and
+      // the remaining cards automatically rebalance to fill the available space.
+      const lowerHtml = cardsHtml([...merits, ...exhibits]);
 
       const container = document.getElementById('placement-grid');
-      container.innerHTML = rows.length
-        ? `<div class="placement-row-win">${rows[0]}</div>` +
-          rows.slice(1).map(html =>
-             `<div class="placement-row">${html}</div>`
-          ).join('')
-        : `<p class="no-results">There is no awarded photographs for this category.</p>`;
+      container.innerHTML =
+        (winnersHtml ? `<div class="placement-row-win">${winnersHtml}</div>` : '') +
+        (lowerHtml ? `<div class="placement-row">${lowerHtml}</div>` : '') ||
+        `<p class="no-results">There are no awarded photographs for this category.</p>`;
     }
 
     renderTabs();
