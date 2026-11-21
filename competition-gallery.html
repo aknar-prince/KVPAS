@@ -744,13 +744,13 @@
       };
       const cardsHtml = (list) => list.filter(hasPhoto).map(renderCard).join('');
 
-      const winnersHtml = cardsHtml(top3);
-      const lowerHtml = cardsHtml([...merits, ...exhibits]);
+      const winners = cardsHtml(top3);
+      const lower = cardsHtml([...merits, ...exhibits]);
 
       const container = document.getElementById('placement-grid');
       container.innerHTML =
-        (winnersHtml ? `<div class="placement-row-win">${winnersHtml}</div>` : '') +
-        (lowerHtml ? `<div class="placement-row">${lowerHtml}</div>` : '') ||
+        (winners ? `<div class="placement-row-win">${winners}</div>` : '') +
+        (lower ? `<div class="placement-row">${lower}</div>` : '') ||
         `<p class="no-results">There are no awarded photographs for this category.</p>`;
     }
 
