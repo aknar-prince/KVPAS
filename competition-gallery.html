@@ -314,6 +314,12 @@
       color: var(--text);
     }
 
+    sup {
+    font-size: 65%;
+    vertical-align: super;
+    line-height: 0;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .placement-badge::after { animation: none; }
     }
@@ -629,9 +635,9 @@
     ];
 
     const PLACEMENTS = [
-      { id: '1st',     label: '1st Place', badge: 'badge-1st', medal: '🥇' },
-      { id: '2nd',     label: '2nd Place', badge: 'badge-2nd', medal: '🥈' },
-      { id: '3rd',     label: '3rd Place', badge: 'badge-3rd', medal: '🥉' },
+      { id: '1st',     label: '1<sup>ST</sup> Place', badge: 'badge-1st', medal: '🥇' },
+      { id: '2nd',     label: '2<sup>ND</sup> Place', badge: 'badge-2nd', medal: '🥈' },
+      { id: '3rd',     label: '3<sup>RD</sup> Place', badge: 'badge-3rd', medal: '🥉' },
       { id: 'merit-1', label: 'Merit',     badge: 'badge-merit' },
       { id: 'merit-2', label: 'Merit',     badge: 'badge-merit' },
       { id: 'merit-3', label: 'Merit',     badge: 'badge-merit' },
