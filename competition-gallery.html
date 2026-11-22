@@ -261,12 +261,59 @@
       font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
       padding: .3rem .7rem; border-radius: 4px;
       color: var(--bg-deep);
+      overflow: hidden;
+      isolation: isolate;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.35);
     }
-    .badge-1st { background: var(--gold); }
-    .badge-2nd { background: var(--silver); }
-    .badge-3rd { background: var(--bronze); }
-    .badge-merit { background: var(--merit); color: var(--black); }
-    .badge-exhibit { background: var(--exhibit); color: var(--text); }
+
+    /* A moving reflection gives each award badge a subtle glossy finish. */
+    .placement-badge::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -80%;
+      width: 45%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.65),
+        transparent
+      );
+      transform: skewX(-25deg);
+      animation: badgeShine 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes badgeShine {
+      0%   { left: -80%; }
+      100% { left: 150%; }
+    }
+
+    .badge-1st {
+      background: linear-gradient(135deg, #fff0a3, #f5c842, #c18b16);
+    }
+    .badge-2nd {
+      background: linear-gradient(135deg, #ffffff, #b9c2cc, #758493);
+    }
+    .badge-3rd {
+      background: linear-gradient(135deg, #ffd0a0, #c98a4b, #854b25);
+    }
+    .badge-merit {
+      background: linear-gradient(135deg, #e6ca55, #9f8a32, #64551c);
+      color: var(--black);
+    }
+    .badge-exhibit {
+      background: linear-gradient(135deg, #b6d5f5, #6f8ab0, #405c80);
+      color: var(--text);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .placement-badge::after { animation: none; }
+    }
 
     .placement-medal {
       position: absolute; top: 8px; right: 8px;
