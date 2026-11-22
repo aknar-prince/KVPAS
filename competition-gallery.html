@@ -30,8 +30,8 @@
     :root {
       --bg-deep:    #0f1923;
       --bg-main:    #1a2a3a;
-      --bg-card:    #101a2a;
-      --jud-bg-card:#1e3148;
+      --bg-card:    #1e3148;
+      --img-bg-card:#101a2a;
       --gold:       #F5C842;
       --gold-dim:   #c9a030;
       --silver:     #b9c2cc;
@@ -43,8 +43,8 @@
       --footer-text: #a0a9b1;
       --cat-btn:    #d8c6a4;
       --img-title:  #c4b980;
-      --border:     rgb(245 200 66 / 40%);
-      --jud-border: rgba(245, 200, 66, 0.18);
+      --border:     rgba(245, 200, 66, 0.18);
+      --img-border: rgb(245 200 66 / 40%);
       --black:      #000000;
     }
 
@@ -235,8 +235,8 @@
       flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));
       min-width: 0;
       container-type: inline-size;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: var(--img-bg-card);
+      border: 1px solid var(--img-border);
       border-radius: 6px;
       overflow: hidden;
       transition: transform .2s, border-color .2s;
@@ -382,8 +382,8 @@
       max-width: 1200px; margin: 0 auto;
     }
     .judge-card {
-      background: var(--jud-bg-card);
-      border: 1px solid var(--jud-border);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 6px;
       overflow: hidden;
       text-align: center;
@@ -414,6 +414,10 @@
       .judge-name { font-size: clamp(.45rem, 6.4cqw, 1.15rem); margin-bottom: clamp(.5rem, 1.4cqw, .3rem); }
       .judge-role { font-size: clamp(.40rem, 4.2cqw, .8rem);   margin-bottom: clamp(.3rem, 3cqw, .7rem); }
       .judge-bio  { font-size: clamp(.40rem, 4.4cqw, .85rem); }
+    }
+
+    @media (max-width: 480px) {
+      .judge-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
     #contact { background: var(--bg-deep); padding: 6rem 6vw; border-top: 1px solid var(--border); }
