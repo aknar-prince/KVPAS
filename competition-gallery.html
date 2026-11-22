@@ -31,6 +31,7 @@
       --bg-deep:    #0f1923;
       --bg-main:    #1a2a3a;
       --bg-card:    #1e3148;
+      --img-bg-card:#101a2a;
       --gold:       #F5C842;
       --gold-dim:   #c9a030;
       --silver:     #b9c2cc;
@@ -42,7 +43,8 @@
       --footer-text: #a0a9b1;
       --cat-btn:    #d8c6a4;
       --img-title:  #c4b980;
-      --border:     rgba(245,200,66,0.18);
+      --border:     rgba(245, 200, 66, 0.18);
+      --img-border: rgb(245 200 66 / 40%);
       --black:      #000000;
     }
 
@@ -233,11 +235,12 @@
       flex: 0 0 min(370px, calc((100% - 2 * var(--gap)) / 3));
       min-width: 0;
       container-type: inline-size;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: var(--img-bg-card);
+      border: 1px solid var(--img-border);
       border-radius: 6px;
       overflow: hidden;
       transition: transform .2s, border-color .2s;
+      margin-bottom: 10px;
     }
 
     .placement-photo {
@@ -258,15 +261,62 @@
     .placement-badge {
       position: absolute; top: 10px; left: 10px;
       font-family: 'Big Shoulders Stencil Display', cursive;
-      font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
       padding: .3rem .7rem; border-radius: 4px;
       color: var(--bg-deep);
+      overflow: hidden;
+      isolation: isolate;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.35);
     }
-    .badge-1st { background: var(--gold); }
-    .badge-2nd { background: var(--silver); }
-    .badge-3rd { background: var(--bronze); }
-    .badge-merit { background: var(--merit); color: var(--black); }
-    .badge-exhibit { background: var(--exhibit); color: var(--text); }
+
+    /* A moving reflection gives each award badge a subtle glossy finish. */
+    .placement-badge::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -80%;
+      width: 45%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.65),
+        transparent
+      );
+      transform: skewX(-25deg);
+      animation: badgeShine 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes badgeShine {
+      0%   { left: -80%; }
+      100% { left: 150%; }
+    }
+
+    .badge-1st {
+      background: linear-gradient(135deg, #fff0a3, #f5c842, #c18b16);
+    }
+    .badge-2nd {
+      background: linear-gradient(135deg, #ffffff, #b9c2cc, #758493);
+    }
+    .badge-3rd {
+      background: linear-gradient(135deg, #ffd0a0, #c98a4b, #854b25);
+    }
+    .badge-merit {
+      background: linear-gradient(135deg, #e6ca55, #9f8a32, #64551c);
+      color: var(--black);
+    }
+    .badge-exhibit {
+      background: linear-gradient(135deg, #b6d5f5, #6f8ab0, #405c80);
+      color: var(--text);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .placement-badge::after { animation: none; }
+    }
 
     .placement-medal {
       position: absolute; top: 8px; right: 8px;
@@ -361,9 +411,9 @@
 
     @supports (width: 1cqw) {
       .judge-info { padding: clamp(.7rem, 6cqw, 1.5rem) clamp(.5rem, 5cqw, 1.4rem) clamp(.9rem, 7cqw, 1.7rem); }
-      .judge-name { font-size: clamp(.72rem, 6.4cqw, 1.15rem); margin-bottom: clamp(.5rem, 1.4cqw, .3rem); }
-      .judge-role { font-size: clamp(.6rem, 4.2cqw, .8rem);   margin-bottom: clamp(.3rem, 3cqw, .7rem); }
-      .judge-bio  { font-size: clamp(.66rem, 4.4cqw, .85rem); }
+      .judge-name { font-size: clamp(.45rem, 6.4cqw, 1.15rem); margin-bottom: clamp(.5rem, 1.4cqw, .3rem); }
+      .judge-role { font-size: clamp(.40rem, 4.2cqw, .8rem);   margin-bottom: clamp(.3rem, 3cqw, .7rem); }
+      .judge-bio  { font-size: clamp(.40rem, 4.4cqw, .85rem); }
     }
 
     @media (max-width: 480px) {
@@ -744,13 +794,13 @@
       };
       const cardsHtml = (list) => list.filter(hasPhoto).map(renderCard).join('');
 
-      const winnersHtml = cardsHtml(top3);
-      const lowerHtml = cardsHtml([...merits, ...exhibits]);
+      const winners = cardsHtml(top3);
+      const lower = cardsHtml([...merits, ...exhibits]);
 
       const container = document.getElementById('placement-grid');
       container.innerHTML =
-        (winnersHtml ? `<div class="placement-row-win">${winnersHtml}</div>` : '') +
-        (lowerHtml ? `<div class="placement-row">${lowerHtml}</div>` : '') ||
+        (winners ? `<div class="placement-row-win">${winners}</div>` : '') +
+        (lower ? `<div class="placement-row">${lower}</div>` : '') ||
         `<p class="no-results">There are no awarded photographs for this category.</p>`;
     }
 
